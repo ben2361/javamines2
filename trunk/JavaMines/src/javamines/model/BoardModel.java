@@ -107,7 +107,7 @@ public class BoardModel {
     }
 
     /**
-     * generates the nessecary number of mines
+     * generates the necessary number of mines
      * and initializes the array
      */
     public void newGame() {
@@ -154,7 +154,7 @@ public class BoardModel {
      /**
      *
      * @param coords array with x and y coordinates (0 = x coord, 1 = y coord)
-     * @return true when gameover, false when ok
+     * @return true when game over, false when OK
      */
     public boolean makeMove(int[] coords) {
         int x = coords[0];
@@ -189,7 +189,7 @@ public class BoardModel {
 
     /**
      * reveals empty fields and numberfields when a empty field is chosen
-     * this function calles itself recursivly
+     * this function calls itself recursively
      *
      * @param startX
      * @param startY
@@ -210,7 +210,7 @@ public class BoardModel {
                     continue;
 
                 checked[x][y] = true;
-                // call this function (recursivity) when value is "empty"
+                // call this function (recursively) when value is "empty"
                 if(board[x][y] == EMPTYVALUE) 
                     revealMore(x, y);
 
@@ -222,7 +222,7 @@ public class BoardModel {
     }
 
     /**
-     * reveals all fields (mostly called when gameover)
+     * reveals all fields (mostly called when game over)
      */
     public void revealAll() {
         for (int x = 0; x < maxSize; x++) {

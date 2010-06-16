@@ -19,6 +19,10 @@ public class BoardPanel extends JPanel {
         // TODO: exception => model not recieved
     }
 
+    /**
+     * 
+     * @param boardModel BoardModel
+     */
     public BoardPanel(BoardModel boardModel) {
         this.boardModel = boardModel;
         this.maxSize = boardModel.getMaxSize();
@@ -30,14 +34,15 @@ public class BoardPanel extends JPanel {
         setLayout(gridLayout);
     }
 
+    /**
+     * 
+     * @param e MousListener
+     */
     public void addClickListener(MouseListener e) {
         for(MineButton but:jButtons)
             but.addMouseListener(e);
     }
 
-    /**
-     * 
-     */
     public void build() {
         int butCount = 0;
 
@@ -67,9 +72,6 @@ public class BoardPanel extends JPanel {
             repaint();
     }
 
-    /**
-     *
-     */
     public void resetButtons_BAK() {
         int butCount = 0;
 
@@ -87,10 +89,7 @@ public class BoardPanel extends JPanel {
 
         repaint();
     }
-    
-    /**
-     *
-     */
+
     public void reDraw() {
         int[] coords;
 
@@ -102,9 +101,6 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    /**
-     *
-     */
     public void disableAllButtons() {
         for (MineButton but:jButtons) {
             but.setEnabled(false);
