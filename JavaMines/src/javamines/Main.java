@@ -4,6 +4,7 @@
  * basic mines game made in java with SWING
  * 
  * @author Nik Van Looy
+ * @version 0.1
  */
 
 package javamines;
