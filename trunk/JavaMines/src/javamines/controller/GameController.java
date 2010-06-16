@@ -9,7 +9,7 @@ import javamines.view.GameFrame;
 
 /**
  * Game Controller
- * controller for difficultysettings and new game button
+ * controller for difficulty settings and new game button
  */
 public class GameController {
 
@@ -18,7 +18,7 @@ public class GameController {
     private BoardPanel boardPanel;
 
     /**
-     * Initiates the board variable with the apropreate difficulty setting
+     * Initiates the board variable with the appropriate difficulty setting
      * 
      * @param boardModel
      * @param gameFrame
@@ -29,7 +29,7 @@ public class GameController {
         this.gameFrame = gameFrame;
         this.boardPanel = boardPanel;
 
-        // listen for mouseclicks on newgame button
+        // listen for mouse clicks on newgame button
         this.gameFrame.addClickListener(new NewGameButtonListner());
         this.gameFrame.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
     }
