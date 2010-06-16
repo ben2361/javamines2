@@ -47,7 +47,7 @@
 	<target name="release" depends="jar,doc" description="Create release version">
 		<echo message="Release" level="info" />
 		<copy file="conf\JavaMines.bat" todir="${distdir}\bin" />
-		<copy file="${builddir}\JavaMines.jar" todir="${distdir}\${libdir}" />
+		<copy file="build\JavaMines.jar" todir="${distdir}\lib" />
 		<copy todir="${distdir}\${docsdir}">
 			<fileset dir="${docsdir}" />
 		</copy>

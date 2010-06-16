@@ -18,6 +18,10 @@ public class BoardModel {
     private int revealedCount;
 
     
+    /**
+     * 
+     * @param diff
+     */
     public BoardModel(Difficulty diff) {
 
         switch(diff) {
@@ -82,7 +86,7 @@ public class BoardModel {
      *
      * @param x
      * @param y
-     * @return
+     * @return boolean[][]
      */
     public boolean isRevealed(int x, int y) {
         return revealed[x][y];
@@ -92,7 +96,7 @@ public class BoardModel {
      * 
      * @param x
      * @param y
-     * @return
+     * @return int[][]
      */
     public int getCellValue(int x, int y) {
         return board[x][y];
@@ -154,7 +158,7 @@ public class BoardModel {
      /**
      *
      * @param coords array with x and y coordinates (0 = x coord, 1 = y coord)
-     * @return true when game over, false when OK
+     * @return boolean true when game over, false when OK
      */
     public boolean makeMove(int[] coords) {
         int x = coords[0];
@@ -236,7 +240,7 @@ public class BoardModel {
      *
      * @param x
      * @param y
-     * @return
+     * @return boolean
      */
     public boolean isMine(int x, int y) {
         if(board[x][y] == MINEVALUE)
