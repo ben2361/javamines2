@@ -19,8 +19,10 @@ public class GameController {
 
     /**
      * Initiates the board variable with the apropreate difficulty setting
-     *
-     * @param diff difficulty setting
+     * 
+     * @param boardModel
+     * @param gameFrame
+     * @param boardPanel
      */
     public GameController(BoardModel boardModel, GameFrame gameFrame, BoardPanel boardPanel) {
         this.boardModel = boardModel;
