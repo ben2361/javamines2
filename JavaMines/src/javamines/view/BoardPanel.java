@@ -16,7 +16,7 @@ public class BoardPanel extends JPanel {
 
 
     public BoardPanel() {
-        // TODO: exception => model not recieved
+        // TODO: exception => model not received
     }
 
     /**

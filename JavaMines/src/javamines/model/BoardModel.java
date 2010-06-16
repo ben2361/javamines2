@@ -86,7 +86,7 @@ public class BoardModel {
      *
      * @param x
      * @param y
-     * @return boolean[][]
+     * @return the revealed matrix
      */
     public boolean isRevealed(int x, int y) {
         return revealed[x][y];
@@ -96,7 +96,7 @@ public class BoardModel {
      * 
      * @param x
      * @param y
-     * @return int[][]
+     * @return the game board
      */
     public int getCellValue(int x, int y) {
         return board[x][y];

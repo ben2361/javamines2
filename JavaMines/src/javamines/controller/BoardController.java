@@ -18,7 +18,7 @@ public class BoardController {
     private BoardPanel boardPanel;
 
     /**
-     * Initiates the board variable with the apropreate difficulty setting
+     * Initiates the board variable with the appropriate difficulty setting
      * 
      * @param boardModel
      * @param boardPanel
