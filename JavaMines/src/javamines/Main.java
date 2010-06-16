@@ -1,3 +1,11 @@
+/**
+ * JavaMines
+ * 
+ * basic mines game made in java with SWING
+ * 
+ * @author Nik Van Looy
+ */
+
 package javamines;
 
 import javamines.controller.BoardController;
@@ -7,10 +15,6 @@ import javamines.model.Difficulty;
 import javamines.view.BoardPanel;
 import javamines.view.GameFrame;
 
-/**
- *
- * 
- */
 public class Main {
 
     public static void main(String[] args) {
