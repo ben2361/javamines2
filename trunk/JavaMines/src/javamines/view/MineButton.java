@@ -47,7 +47,7 @@ public class MineButton extends JButton {
     	
     	switch(butState) {
     	case REVEALED:
-    		icon = new ImageIcon("res/img/but_"+ICON_REVEALED+".png");
+    		icon = new ImageIcon("/javamines/res/img/but_"+ICON_REVEALED+".png");
     		break;
     	case HOVER:
     		icon = new ImageIcon("res/img/but_"+ICON_HOVER+".png");
