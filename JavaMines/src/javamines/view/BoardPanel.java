@@ -54,7 +54,7 @@ public class BoardPanel extends JPanel {
                     add(jButtons[butCount]);
                 }
                 jButtons[butCount].setText("");
-                jButtons[butCount].setisMine(boardModel.isMine(x, y));
+                jButtons[butCount].setIsMine(boardModel.isMine(x, y));
                 jButtons[butCount].setGameValue(boardModel.getCellValue(x, y));
                 jButtons[butCount].setEnabled(true);
                 jButtons[butCount].setSelected(false);
@@ -77,7 +77,7 @@ public class BoardPanel extends JPanel {
 
         for (int y = 0; y  < maxSize; y++) {
             for (int x = 0; x < maxSize; x++) {
-                jButtons[butCount].setisMine(boardModel.isMine(x, y));
+                jButtons[butCount].setIsMine(boardModel.isMine(x, y));
                 jButtons[butCount].setGameValue(boardModel.getCellValue(x, y));
                 jButtons[butCount].setText("");
                 jButtons[butCount].setEnabled(true);

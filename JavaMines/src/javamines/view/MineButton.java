@@ -30,6 +30,10 @@ public class MineButton extends JToggleButton {
         flagButton();
     }
     
+    /**
+     * 
+     * @param butState
+     */
     private void setButIcon(ButtonState butState) {
     	ImageIcon icon = null;
     	
@@ -62,6 +66,10 @@ public class MineButton extends JToggleButton {
         return gameValue;
     }
 
+    /**
+     * 
+     * @param gameValue
+     */
     public void setGameValue(int gameValue) {
         this.gameValue = gameValue;
     }
@@ -78,10 +86,12 @@ public class MineButton extends JToggleButton {
         flagged = !flagged;
         flagButton();
     }
+    
+    /**
+     * 
+     * @param isMine
+     */
     public void setIsMine(boolean isMine) {
-        this.isMine = isMine;
-    }
-    public void setisMine(boolean isMine) {
         this.isMine = isMine;
     }
 
