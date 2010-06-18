@@ -144,7 +144,6 @@ public class MineButton extends JButton {
         else
         	setButIcon(ButtonState.NUMBER);
 
-        //setEnabled(false);
         setSelected(true);
     }
 
