@@ -38,9 +38,7 @@
 		<echo message="Create JAR" level="info" />
 		<jar destfile="build\JavaMines_${version}.jar" basedir="${destdir}" manifest="conf\Manifest.txt">
 		    <fileset dir="${builddir}/classes"/>
-			
 		    <fileset dir="res"/>
-				
 		</jar>
 	</target>
 	

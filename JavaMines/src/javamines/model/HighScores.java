@@ -1,8 +1,8 @@
 package javamines.model;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ public class HighScores {
 
         try  {
             Properties jdbcProperties = new Properties();
-            FileInputStream fisProperty = new FileInputStream("res/db.conf");
+            InputStreamReader fisProperty = new InputStreamReader(this.getClass().getResourceAsStream("db.conf"));
             
             jdbcProperties.load(fisProperty);
             String driver = jdbcProperties.getProperty("driver");
