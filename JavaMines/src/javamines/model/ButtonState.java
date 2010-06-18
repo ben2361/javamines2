@@ -6,5 +6,6 @@ public enum ButtonState {
 	HOVER,
 	FLAGGED,
 	MINE,
+	MINE_EXPLODED,
 	NUMBER
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <project name="JavaMines" default="all">
 	
-	<property name="version" value="v0.2" />
+	<property name="version" value="v0.2.1" />
 	
 	<property file="folders.properties" />
 	<property environment="env" />
