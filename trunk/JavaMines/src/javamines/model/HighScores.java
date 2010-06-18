@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
@@ -38,12 +37,14 @@ public class HighScores {
             java.sql.Date date = new java.sql.Date(u_date.getTime());
             
             try {
+            	// prepare statement
 	            stmt = connection.prepareStatement("insert into highscore (name, score, date_added) VALUES(?,?,?);");
 	
 	            stmt.setString(1, name);
 	            stmt.setInt(2, timePlayed);
 	            stmt.setDate(3, date);
 	
+	            // execute the statement on the server
 	            stmt.executeUpdate();
             }
             catch(SQLException se) {
