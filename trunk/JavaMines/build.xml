@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <project name="JavaMines" default="all">
 	
+	<property name="version" value="v0.2" />
+	
 	<property file="folders.properties" />
 	<property environment="env" />
 	<property name="systemauthor" value="${user.name}" />
@@ -34,7 +36,7 @@
 	
 	<target name="jar" depends="compile" description="Create JAR-file">
 		<echo message="Create JAR" level="info" />
-		<jar destfile="build\JavaMines.jar" basedir="${destdir}" manifest="conf\Manifest.txt">
+		<jar destfile="build\JavaMines_${version}.jar" basedir="${destdir}" manifest="conf\Manifest.txt">
 		    <fileset dir="${builddir}/classes"/>
 			
 		    <fileset dir="res"/>
@@ -53,11 +55,11 @@
 	<target name="release" depends="jar,doc" description="Create release version">
 		<echo message="Release" level="info" />
 		<copy file="conf\JavaMines.bat" todir="${distdir}\bin" />
-		<copy file="build\JavaMines.jar" todir="${distdir}\lib" />
+		<copy file="build\JavaMines_${version}.jar" todir="${distdir}\lib" />
 		<copy todir="${distdir}\${docsdir}">
 			<fileset dir="${docsdir}" />
 		</copy>
-		<zip destfile="${distdir}\JavaMines.zip" basedir="${distdir}" excludes="JavaMines.zip" />
+		<zip destfile="${distdir}\JavaMines_${version}.zip" basedir="${distdir}" excludes="JavaMines_${version}.zip" />
 	</target>
 	
 	<target name="all" depends="run,jar,doc" description="Do them All">
