@@ -99,10 +99,4 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    public void disableAllButtons() {
-        for (MineButton but:jButtons) {
-            but.setEnabled(false);
-        }
-    }
-
 }

@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Board Controller
- * controls the togglebutton events
+ * controls the toggle button events
  */
 public class BoardController {
     
@@ -42,23 +42,20 @@ public class BoardController {
 
         coords = but.getCoords();
 
-        if (but.getCurrentState() == ButtonState.DEFAULT) {
-            //but.setEnabled(false);
+        if (but.getCurrentState() == ButtonState.DEFAULT || but.getCurrentState() == ButtonState.HOVER) {
 
             if (but.isMine()) {
                 // game over
                 boardModel.revealAll();
                 boardPanel.reDraw();
-                //but.setEnabled(false);
                 JOptionPane.showMessageDialog(null, "You lost", "You Lost!", JOptionPane.INFORMATION_MESSAGE);
-                //disableBoard();
             }
             else {
                 boardModel.reveal(coords[0], coords[1]);
                 boardPanel.reDraw();
 
                 if(boardModel.checkWon()) {
-                    boardPanel.disableAllButtons();
+                	boardModel.revealAll();
                     JOptionPane.showMessageDialog(null, "Congratz, You Won!", "You Won!", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
@@ -68,13 +65,21 @@ public class BoardController {
     class ToggleButtonListner implements MouseListener {
 
         public void mouseClicked(MouseEvent e) {}
-        public void mouseEntered(MouseEvent e) {}
-        public void mouseExited(MouseEvent e) {}
+        public void mouseEntered(MouseEvent e) {
+        	MineButton but = (MineButton) e.getSource();
+        	
+        	but.mouseEnter();
+        }
+        public void mouseExited(MouseEvent e) {
+        	MineButton but = (MineButton) e.getSource();
+        
+        	but.mouseExit();
+        }
         public void mousePressed(MouseEvent e) {
             MineButton but = (MineButton) e.getSource();
 
             if(e.getButton() == MouseEvent.BUTTON3) {
-                if(but.getCurrentState() == ButtonState.DEFAULT || but.getCurrentState() == ButtonState.FLAGGED)
+                if(but.getCurrentState() == ButtonState.DEFAULT || but.getCurrentState() == ButtonState.FLAGGED  || but.getCurrentState() == ButtonState.HOVER)
                     but.toggleFlagged();
             }
             else if(e.getButton() == MouseEvent.BUTTON1) {

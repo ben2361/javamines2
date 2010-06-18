@@ -77,6 +77,15 @@ public class MineButton extends JButton {
     public int getGameValue() {
         return gameValue;
     }
+    
+    public void mouseEnter() {
+    	if(getCurrentState() == ButtonState.DEFAULT)
+    		setButIcon(ButtonState.HOVER);
+    }
+    public void mouseExit() {
+    	if(getCurrentState() == ButtonState.HOVER)
+    		setButIcon(ButtonState.DEFAULT);
+    }
 
     /**
      * 
@@ -155,9 +164,7 @@ public class MineButton extends JButton {
     private void flagButton() {
         if(flagged)
         	setButIcon(ButtonState.FLAGGED);
-        else if(previousState == ButtonState.DEFAULT)
-        	setButIcon(ButtonState.DEFAULT);
         else
-        	setButIcon(ButtonState.REVEALED);
+        	setButIcon(previousState);
     }
 }
