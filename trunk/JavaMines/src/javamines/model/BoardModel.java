@@ -1,5 +1,11 @@
 package javamines.model;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
+
 /**
  * MineSweeper Business Logic
  */
@@ -16,6 +22,8 @@ public class BoardModel {
     public static final int EMPTYVALUE = 0;
 
     private int revealedCount;
+    private Timer timer;
+    private int timePlayed;
 
     
     /**
@@ -83,6 +91,15 @@ public class BoardModel {
     }
     
     /**
+     * get the playtime in seconds
+     * 
+     * @return
+     */
+    public int getTimePlayed() {
+    	return timePlayed;
+    }
+    
+    /**
      *
      * @param x
      * @param y
@@ -137,8 +154,18 @@ public class BoardModel {
                 counter++;
             }
         }
+        
+        //start the game timer
+        timePlayed = 0;
+        timer = new Timer(100, new timerAction());
+        timer.start();
     }
-
+    
+    public void endGame() {
+    	revealAll();
+    	timer.stop();
+    }
+    
     /**
      * add 8 numbers around the given coordinates
      * 
@@ -247,6 +274,14 @@ public class BoardModel {
             return true;
         
         return false;
+    }
+    
+    
+    class timerAction implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            timePlayed++;
+        }
     }
 
 }

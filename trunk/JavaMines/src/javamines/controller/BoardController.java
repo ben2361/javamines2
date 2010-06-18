@@ -46,17 +46,20 @@ public class BoardController {
 
             if (but.isMine()) {
                 // game over
-                boardModel.revealAll();
+                boardModel.endGame();
                 boardPanel.reDraw();
-                JOptionPane.showMessageDialog(null, "You lost", "You Lost!", JOptionPane.INFORMATION_MESSAGE);
+            	int timePlayed = boardModel.getTimePlayed();
+                JOptionPane.showMessageDialog(null, "You lost. You played "+timePlayed+" seconds.", "You Lost" , JOptionPane.INFORMATION_MESSAGE);
             }
             else {
                 boardModel.reveal(coords[0], coords[1]);
                 boardPanel.reDraw();
 
-                if(boardModel.checkWon()) {
-                	boardModel.revealAll();
-                    JOptionPane.showMessageDialog(null, "Congratz, You Won!", "You Won!", JOptionPane.INFORMATION_MESSAGE);
+                if(boardModel.checkWon()) { // game finished
+                	boardModel.endGame();
+                    boardPanel.reDraw();
+                	int timePlayed = boardModel.getTimePlayed();
+                    JOptionPane.showMessageDialog(null, "Congratz, You Won! It took "+timePlayed+"seconds to complete the game", "You Won!", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         }
