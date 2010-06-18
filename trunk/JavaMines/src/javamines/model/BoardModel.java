@@ -157,7 +157,7 @@ public class BoardModel {
         
         //start the game timer
         timePlayed = 0;
-        timer = new Timer(100, new timerAction());
+        timer = new Timer(1000, new timerAction());
         timer.start();
     }
     

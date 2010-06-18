@@ -24,6 +24,7 @@ public class MineButton extends JButton {
     private final static String ICON_FLAG = "flag";
     private final static String ICON_HOVER = "hover";
     private final static String ICON_MINE = "mine";
+    private final static String ICON_MINE_EXPLODED = "mine_active";
     private final static String ICON_REVEALED = "revealed";
     private final static String ICON_DEFAULT = "default";
 
@@ -59,6 +60,9 @@ public class MineButton extends JButton {
     		break;
     	case MINE:
     		imgLocation = "/img/but_"+ICON_MINE+".png";
+    		break;
+    	case MINE_EXPLODED:
+    		imgLocation = "/img/but_"+ICON_MINE_EXPLODED+".png";
     		break;
     	case NUMBER:
     		imgLocation = "/img/but_"+getGameValue()+".png";
@@ -133,10 +137,15 @@ public class MineButton extends JButton {
         return flagged;
     }
     public boolean isMine() {
+    	if(isMine)
+    		setButIcon(ButtonState.MINE_EXPLODED);
         return isMine;
     }
 
     public void reveal() {
+    	if(currentState == ButtonState.MINE_EXPLODED)
+    		return;
+    	
         if(isMine)
             setButIcon(ButtonState.MINE);
         else if(gameValue == 0)
