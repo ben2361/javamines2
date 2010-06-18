@@ -1,12 +1,11 @@
 package javamines.view;
 
-import java.awt.Color;
-import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javamines.model.ButtonState;
 
 
+@SuppressWarnings("serial")
 public class MineButton extends JToggleButton {
 
     private boolean flagged;
@@ -35,6 +34,9 @@ public class MineButton extends JToggleButton {
     	ImageIcon icon = null;
     	
     	switch(butState) {
+    	case REVEALED:
+    		icon = new ImageIcon("img/but_"+ICON_REVEALED+".png");
+    		break;
     	case HOVER:
     		icon = new ImageIcon("img/but_"+ICON_HOVER+".png");
     		break;
