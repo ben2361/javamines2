@@ -24,7 +24,7 @@ public class GameFrame extends JFrame {
         contentPanel = new JPanel();
         contentPanel.setLayout(new BorderLayout());
         
-        setSize(180, 235);
+        setSize(178, 234);
         //setSize((int) 45 * boardModel.getMaxSize(), (int) 45 * boardModel.getMaxSize());
         setContentPane(contentPanel);
         setTitle("Minesweeper v1.0");

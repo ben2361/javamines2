@@ -17,13 +17,14 @@
 		<echo message="Initialize" level="info" />
 		<mkdir dir="build" />
 		<mkdir dir="${builddir}" />
+		<mkdir dir="${destdir}" />
 		<mkdir dir="${distdir}" />
 		<mkdir dir="${docsdir}" />
 	</target>
 	
 	<target name="compile" depends="init" description="Compile">
 		<echo message="Compile sources" level="info" />
-		<javac srcdir="src" destdir="${builddir}" classpathref="classpath" />
+		<javac srcdir="src" destdir="${destdir}" classpathref="classpath" />
 	</target>
 	
 	<target name="run" depends="compile" description="Run Program">
@@ -33,7 +34,12 @@
 	
 	<target name="jar" depends="compile" description="Create JAR-file">
 		<echo message="Create JAR" level="info" />
-		<jar destfile="build\JavaMines.jar" basedir="${builddir}" manifest="conf\MainClass.txt" />
+		<jar destfile="build\JavaMines.jar" basedir="${destdir}" manifest="conf\Manifest.txt">
+		    <fileset dir="${builddir}/classes"/>
+			
+		    <fileset dir="res"/>
+				
+		</jar>
 	</target>
 	
 	<target name="doc" depends="init" description="Generate documentation">
@@ -60,7 +66,7 @@
 	<target name="clean" description="Cleanup">
 		<delete includeEmptyDirs="true" quiet="true">
 			<fileset dir="${docsdir}" />
-			<fileset dir="build" />
+			<fileset dir="${builddir}" />
 			<fileset dir="${distdir}" />
 		</delete>
 	</target>
