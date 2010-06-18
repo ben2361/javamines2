@@ -58,7 +58,7 @@ public class BoardPanel extends JPanel {
                 jButtons[butCount].setGameValue(boardModel.getCellValue(x, y));
                 jButtons[butCount].setEnabled(true);
                 jButtons[butCount].setSelected(false);
-                jButtons[butCount].unmark();
+                jButtons[butCount].unflag();
 
                 butCount++;
             }
@@ -82,7 +82,7 @@ public class BoardPanel extends JPanel {
                 jButtons[butCount].setText("");
                 jButtons[butCount].setEnabled(true);
                 jButtons[butCount].setSelected(false);
-                jButtons[butCount].unmark();
+                jButtons[butCount].unflag();
                 butCount++;
             }
         }
