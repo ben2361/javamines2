@@ -1,6 +1,8 @@
 package javamines.view;
 
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -41,33 +43,35 @@ public class MineButton extends JButton {
      * @param butState
      */
     private void setButIcon(ButtonState butState) {
-    	ImageIcon icon = null;
     	previousState = currentState;
     	currentState = butState;
-    	
+    	String imgLocation = new String();
+    	  
     	switch(butState) {
     	case REVEALED:
-    		icon = new ImageIcon("/javamines/res/img/but_"+ICON_REVEALED+".png");
+    		imgLocation = "/img/but_"+ICON_REVEALED+".png";
     		break;
     	case HOVER:
-    		icon = new ImageIcon("res/img/but_"+ICON_HOVER+".png");
+    		imgLocation = "/img/but_"+ICON_HOVER+".png";
     		break;
     	case FLAGGED:
-    		icon = new ImageIcon("res/img/but_"+ICON_FLAG+".png");
+    		imgLocation = "/img/but_"+ICON_FLAG+".png";
     		break;
     	case MINE:
-    		icon = new ImageIcon("res/img/but_"+ICON_MINE+".png");
+    		imgLocation = "/img/but_"+ICON_MINE+".png";
     		break;
     	case NUMBER:
-    		icon = new ImageIcon("res/img/but_"+getGameValue()+".png");
+    		imgLocation = "/img/but_"+getGameValue()+".png";
     		break;
     	case DEFAULT:
 		default:
-    		icon = new ImageIcon("res/img/but_"+ICON_DEFAULT+".png");
+			imgLocation = "/img/but_"+ICON_DEFAULT+".png";
 			break;
     	}
     	
-		setIcon(icon);
+    	URL url = this.getClass().getResource(imgLocation);
+    	ImageIcon img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(url));
+		setIcon(img);
     }
 
     public int getGameValue() {
