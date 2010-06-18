@@ -1,25 +1,29 @@
 package javamines.view;
 
+import java.awt.Color;
+
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JToggleButton;
+import javax.swing.JButton;
+
 import javamines.model.ButtonState;
 
 
 @SuppressWarnings("serial")
-public class MineButton extends JToggleButton {
+public class MineButton extends JButton {
 
     private boolean flagged;
     private int gameValue;
     private boolean isMine;
     private int[] coords;
-
+    private ButtonState currentState;
+    private ButtonState previousState;
+    
     private final static String ICON_FLAG = "flag";
     private final static String ICON_HOVER = "hover";
     private final static String ICON_MINE = "mine";
     private final static String ICON_REVEALED = "revealed";
     private final static String ICON_DEFAULT = "default";
-
-    private ImageIcon myIcon = new ImageIcon("images/myPic.gif");
 
 
     public MineButton() {
@@ -27,7 +31,9 @@ public class MineButton extends JToggleButton {
         isMine = false;
         coords = new int[2];
         setButIcon(ButtonState.DEFAULT);
-        flagButton();
+        setFocusPainted(false);
+        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        //flagButton();
     }
     
     /**
@@ -36,26 +42,28 @@ public class MineButton extends JToggleButton {
      */
     private void setButIcon(ButtonState butState) {
     	ImageIcon icon = null;
+    	previousState = currentState;
+    	currentState = butState;
     	
     	switch(butState) {
     	case REVEALED:
-    		icon = new ImageIcon("img/but_"+ICON_REVEALED+".png");
+    		icon = new ImageIcon("res/img/but_"+ICON_REVEALED+".png");
     		break;
     	case HOVER:
-    		icon = new ImageIcon("img/but_"+ICON_HOVER+".png");
+    		icon = new ImageIcon("res/img/but_"+ICON_HOVER+".png");
     		break;
     	case FLAGGED:
-    		icon = new ImageIcon("img/but_"+ICON_FLAG+".png");
+    		icon = new ImageIcon("res/img/but_"+ICON_FLAG+".png");
     		break;
     	case MINE:
-    		icon = new ImageIcon("img/but_"+ICON_MINE+".png");
+    		icon = new ImageIcon("res/img/but_"+ICON_MINE+".png");
     		break;
     	case NUMBER:
-    		icon = new ImageIcon("img/but_"+getGameValue()+".png");
+    		icon = new ImageIcon("res/img/but_"+getGameValue()+".png");
     		break;
     	case DEFAULT:
 		default:
-    		icon = new ImageIcon("img/but_"+ICON_DEFAULT+".png");
+    		icon = new ImageIcon("res/img/but_"+ICON_DEFAULT+".png");
 			break;
     	}
     	
@@ -75,17 +83,30 @@ public class MineButton extends JToggleButton {
     }
 
     public void flag() {
-        flagged = true;
+    	flagged = true;
         flagButton();
     }
     public void unflag() {
-        flagged = false;
+    	flagged = false;
         flagButton();
     }
-    public void toggleMarked() {
+    public void toggleFlagged() {
         flagged = !flagged;
         flagButton();
     }
+    
+    public void reset() {
+        setEnabled(true);
+        setSelected(false);
+        flagged = false;
+        setButIcon(ButtonState.DEFAULT);
+    }
+    
+ 
+    public ButtonState getCurrentState() {
+    	return currentState;
+    }
+    
     
     /**
      * 
@@ -95,7 +116,7 @@ public class MineButton extends JToggleButton {
         this.isMine = isMine;
     }
 
-    public boolean isMarked() {
+    public boolean isFlagged() {
         return flagged;
     }
     public boolean isMine() {
@@ -103,14 +124,14 @@ public class MineButton extends JToggleButton {
     }
 
     public void reveal() {
-        /*if(isMine)
-            this.setText(MINETEXT);
+        if(isMine)
+            setButIcon(ButtonState.MINE);
         else if(gameValue == 0)
-            this.setText(EMPTYTEXT);
+        	setButIcon(ButtonState.REVEALED);
         else
-            this.setText(String.valueOf(gameValue));*/
+        	setButIcon(ButtonState.NUMBER);
 
-        setEnabled(false);
+        //setEnabled(false);
         setSelected(true);
     }
 
@@ -128,9 +149,11 @@ public class MineButton extends JToggleButton {
     }
 
     private void flagButton() {
-        /*if(flagged)
-            this.setText(MARKEDTEXT);
+        if(flagged)
+        	setButIcon(ButtonState.FLAGGED);
+        else if(previousState == ButtonState.DEFAULT)
+        	setButIcon(ButtonState.DEFAULT);
         else
-            this.setText("");*/
+        	setButIcon(ButtonState.REVEALED);
     }
 }

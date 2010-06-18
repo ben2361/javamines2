@@ -8,6 +8,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
+@SuppressWarnings("serial")
 public class GameFrame extends JFrame {
 
     private JPanel contentPanel;
@@ -23,11 +24,12 @@ public class GameFrame extends JFrame {
         contentPanel = new JPanel();
         contentPanel.setLayout(new BorderLayout());
         
-        setSize(395, 395);
+        setSize(180, 235);
         //setSize((int) 45 * boardModel.getMaxSize(), (int) 45 * boardModel.getMaxSize());
         setContentPane(contentPanel);
         setTitle("Minesweeper v1.0");
         setVisible(true);
+        setResizable(false);
 
         build();
     }
