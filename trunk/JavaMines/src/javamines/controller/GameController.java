@@ -29,7 +29,7 @@ public class GameController {
         this.gameFrame = gameFrame;
         this.boardPanel = boardPanel;
 
-        // listen for mouse clicks on newgame button
+        // listen for mouse clicks on new game button
         this.gameFrame.addClickListener(new NewGameButtonListner());
         this.gameFrame.setDefaultCloseOperation(GameFrame.EXIT_ON_CLOSE);
     }

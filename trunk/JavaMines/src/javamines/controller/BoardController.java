@@ -3,6 +3,7 @@ package javamines.controller;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javamines.model.BoardModel;
+import javamines.model.ButtonState;
 import javamines.view.BoardPanel;
 import javamines.view.MineButton;
 
@@ -31,7 +32,7 @@ public class BoardController {
         this.boardPanel.build();
         this.boardPanel.repaint();
 
-        // listen for mouseclicks on the boardgrid
+        // listen for mouse clicks on the boardgrid
         this.boardPanel.addClickListener(new ToggleButtonListner());
     }
 
@@ -41,14 +42,14 @@ public class BoardController {
 
         coords = but.getCoords();
 
-        if (but.isEnabled()) {
-            but.setEnabled(false);
+        if (but.getCurrentState() == ButtonState.DEFAULT) {
+            //but.setEnabled(false);
 
             if (but.isMine()) {
                 // game over
                 boardModel.revealAll();
                 boardPanel.reDraw();
-                but.setEnabled(false);
+                //but.setEnabled(false);
                 JOptionPane.showMessageDialog(null, "You lost", "You Lost!", JOptionPane.INFORMATION_MESSAGE);
                 //disableBoard();
             }
@@ -73,11 +74,11 @@ public class BoardController {
             MineButton but = (MineButton) e.getSource();
 
             if(e.getButton() == MouseEvent.BUTTON3) {
-                if(but.isEnabled())
-                    but.toggleMarked();
+                if(but.getCurrentState() == ButtonState.DEFAULT || but.getCurrentState() == ButtonState.FLAGGED)
+                    but.toggleFlagged();
             }
             else if(e.getButton() == MouseEvent.BUTTON1) {
-                if(but.isMarked()) {
+                if(but.isFlagged()) {
                     but.setSelected(true);
                     return;
                 }

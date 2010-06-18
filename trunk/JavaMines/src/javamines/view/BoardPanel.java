@@ -7,6 +7,7 @@ import javamines.model.BoardModel;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
 
     private MineButton jButtons[];
@@ -53,12 +54,9 @@ public class BoardPanel extends JPanel {
                     jButtons[butCount].setCoords(x, y);
                     add(jButtons[butCount]);
                 }
-                jButtons[butCount].setText("");
                 jButtons[butCount].setIsMine(boardModel.isMine(x, y));
                 jButtons[butCount].setGameValue(boardModel.getCellValue(x, y));
-                jButtons[butCount].setEnabled(true);
-                jButtons[butCount].setSelected(false);
-                jButtons[butCount].unflag();
+                jButtons[butCount].reset();
 
                 butCount++;
             }
