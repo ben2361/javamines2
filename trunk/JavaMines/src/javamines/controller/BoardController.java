@@ -52,7 +52,7 @@ public class BoardController {
                 boardModel.endGame();
                 boardPanel.reDraw();
             	int timePlayed = boardModel.getTimePlayed();
-
+            	
                 JOptionPane.showMessageDialog(null, "You lost. You played "+timePlayed+" seconds.", "You Lost" , JOptionPane.INFORMATION_MESSAGE);
             }
             else {
@@ -67,21 +67,21 @@ public class BoardController {
                 	Object[] options = {"Yep", "Nope!"};
 
                     int submitScores = JOptionPane.showOptionDialog(
-	                		null, 
-	                		"Congratz, You Won! It took "+timePlayed+"seconds to complete the game", "You Won!", 
-	                		JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-	                		null, 
-	                		options,
-	                	    options[0]);
+                    		null, 
+                    		"Congratz, You Won! It took "+timePlayed+" seconds to complete the game. \n Do you wish to submit you score?", "You Won!", 
+                    		JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+                    		null, 
+                    		options,
+                    	    options[0]);
                     
                     if(submitScores == JOptionPane.YES_OPTION) {
-	                    try {
-	                    	new HighScores(timePlayed);
-	                    }
-	                    catch(SQLException se) {
-	                    	JOptionPane.showMessageDialog(null, "OOPS there seems to be an error, we can't submit your highscore at the moment.");
-	                    	System.err.println(se);
-	                    }
+                        try {
+                        	new HighScores(timePlayed);
+                        }
+                        catch(SQLException se) {
+                        	JOptionPane.showMessageDialog(null, "OOPS there seems to be an error, we can't submit your highscore at the moment.");
+                        	System.err.println(se);
+                        }
                     }
                 }
             }
