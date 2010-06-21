@@ -1,68 +1,82 @@
 package javamines.model;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
+import nvl.db.ConnectionManager;
+
 public class HighScores {
 	
-    public HighScores(int timePlayed) throws SQLException {
+	/**
+	 * 
+	 * @param timePlayed
+	 * @throws SQLException
+	 */
+    public static void submitNew(int timePlayed) throws SQLException {
         Connection connection = null;
         PreparedStatement stmt = null;
+        
+        // ask user for a name
+        String name = (String) JOptionPane.showInputDialog("Enter your name:");
+        java.util.Date u_date = new java.util.Date();
+        java.sql.Date date = new java.sql.Date(u_date.getTime());
 
-        try  {
-            Properties jdbcProperties = new Properties();
-            InputStreamReader fisProperty = new InputStreamReader(this.getClass().getResourceAsStream("db.conf"));
-            
-            jdbcProperties.load(fisProperty);
-            String driver = jdbcProperties.getProperty("driver");
-            String url = jdbcProperties.getProperty("url");
-            String user = jdbcProperties.getProperty("user");
-            String password = jdbcProperties.getProperty("password");
+        try {
+        	connection = ConnectionManager.getConnection();
+        	
+        	// prepare statement
+            stmt = connection.prepareStatement("insert into highscore (name, score, date_added) VALUES(?,?,?);");
 
-            Class.forName(driver);
+            stmt.setString(1, name);
+            stmt.setInt(2, timePlayed);
+            stmt.setDate(3, date);
 
-            connection = DriverManager.getConnection(url, user, password);
-            
-            // ask user for a name
-            String name = (String) JOptionPane.showInputDialog("Enter your name:");
-            java.util.Date u_date = new java.util.Date();
-            java.sql.Date date = new java.sql.Date(u_date.getTime());
-            
-            try {
-            	// prepare statement
-	            stmt = connection.prepareStatement("insert into highscore (name, score, date_added) VALUES(?,?,?);");
-	
-	            stmt.setString(1, name);
-	            stmt.setInt(2, timePlayed);
-	            stmt.setDate(3, date);
-	
-	            // execute the statement on the server
-	            stmt.executeUpdate();
-            }
-            catch(SQLException se) {
-            	throw new SQLException(se);
-            }
+            // execute the statement on the server
+            stmt.executeUpdate();
         }
-        catch(ClassNotFoundException ce) {
-            throw new SQLException(ce);
-        }
-        catch (FileNotFoundException fe) {
-            throw new SQLException(fe);
-        }
-        catch(IOException ie) {
-            throw new SQLException(ie);
+        catch(SQLException se) {
+        	throw new SQLException(se);
         }
         finally {
-            if(connection != null)
-                try { connection.close(); } catch(SQLException se) {}
+        	ConnectionManager.close(connection);
+        }
+    }
+    
+    
+    public static void showAll() throws SQLException {
+    	Connection connection = null;
+    	Statement stmt = null;
+    	ResultSet result = null;
+    	
+        try {
+        	connection = ConnectionManager.getConnection();
+        	
+        	// prepare statement
+            stmt = connection.createStatement();
+            
+            // execute the statement on the server
+            result = stmt.executeQuery("select name, score, date_added from highscore order by score ASC limit 10;");
+            
+            String msg = new String("Highscores:\n\n");
+            int i = 1;
+            
+            while(result.next()) {
+            	msg += i + ": " + result.getString("name") + " - " + result.getInt("score") + "s\n";
+        		i++;
+            }
+            
+            JOptionPane.showMessageDialog(null, msg);
+        }
+        catch(SQLException se) {
+        	throw new SQLException(se);
+        }
+        finally {
+        	ConnectionManager.close(connection);
         }
     }
 }

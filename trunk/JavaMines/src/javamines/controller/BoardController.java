@@ -53,7 +53,7 @@ public class BoardController {
                 boardPanel.reDraw();
             	int timePlayed = boardModel.getTimePlayed();
             	
-                JOptionPane.showMessageDialog(null, "You lost. You played "+timePlayed+" seconds.", "You Lost" , JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Game Over. You played "+timePlayed+" seconds.", "You Lost" , JOptionPane.INFORMATION_MESSAGE);
             }
             else {
                 boardModel.reveal(coords[0], coords[1]);
@@ -76,7 +76,10 @@ public class BoardController {
                     
                     if(submitScores == JOptionPane.YES_OPTION) {
                         try {
-                        	new HighScores(timePlayed);
+                        	// submit highscore
+                        	HighScores.submitNew(timePlayed);
+                        	// show all highscores
+                        	HighScores.showAll();
                         }
                         catch(SQLException se) {
                         	JOptionPane.showMessageDialog(null, "OOPS there seems to be an error, we can't submit your highscore at the moment.");
