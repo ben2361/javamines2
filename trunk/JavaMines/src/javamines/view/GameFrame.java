@@ -2,11 +2,16 @@ package javamines.view;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseListener;
-import javax.swing.JButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToolBar;
+
 
 @SuppressWarnings("serial")
 public class GameFrame extends JFrame {
@@ -14,10 +19,15 @@ public class GameFrame extends JFrame {
     private JPanel contentPanel;
     private BoardPanel boardPanel;
     private JToolBar toolbar;
-    private JButton btnNewGame;
     private JMenuBar menuBar;
+    private JLabel timeLabel;
+    private JMenuItem mnuGameNewGame;
     
-
+    
+    /**
+     * 
+     * @param boardPanel BoardPanel
+     */
     public GameFrame(BoardPanel boardPanel) {
         this.boardPanel = boardPanel;
         
@@ -30,31 +40,56 @@ public class GameFrame extends JFrame {
         setTitle("Minesweeper v1.0");
         setVisible(true);
         setResizable(false);
-
+        
         build();
     }
 
     public void build() {
-        btnNewGame = new JButton();
-        btnNewGame.setText("New Game");
-
         // menubar 
         menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
+        JMenu mnuGame = new JMenu("Game");
+        mnuGameNewGame = new JMenuItem("New Game");
+        //mnuGameNewGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        mnuGame.add(mnuGameNewGame);
+        
+        mnuGame.addSeparator();
+        
         // diff menu
-        //menuBar.add();
+        ButtonGroup group = new ButtonGroup();
+
+        JRadioButtonMenuItem mnuGameDiffEasy = new JRadioButtonMenuItem("Easy");
+        JRadioButtonMenuItem mnuGameDiffMedium = new JRadioButtonMenuItem("Medium");
+        JRadioButtonMenuItem mnuGameDiffHard = new JRadioButtonMenuItem("Hard");
+        
+        group.add(mnuGameDiffEasy);
+        group.add(mnuGameDiffMedium);
+        group.add(mnuGameDiffHard);
+        
+        mnuGame.add(mnuGameDiffEasy);
+        mnuGame.add(mnuGameDiffMedium);
+        mnuGame.add(mnuGameDiffHard);
+        
+        menuBar.add(mnuGame);
 
         // toolbar met newgame button
         toolbar = new JToolBar();
         toolbar.setFloatable(false);
-        toolbar.add(btnNewGame);
+        
+        timeLabel = new JLabel("0");
+        toolbar.add(new JLabel("time played: "));
+        toolbar.add(timeLabel);
 
         contentPanel.add(toolbar, BorderLayout.NORTH);
         contentPanel.add(boardPanel, BorderLayout.CENTER);
     }
     
+    /**
+     * 
+     * @param e MouseListener
+     */
     public void addClickListener(MouseListener e) {
-        btnNewGame.addMouseListener(e);
+    	mnuGameNewGame.addMouseListener(e);
     }
 }

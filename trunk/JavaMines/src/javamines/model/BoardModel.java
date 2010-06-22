@@ -49,6 +49,8 @@ public class BoardModel {
                 System.out.println("Wrong difficultysetting");
                 break;
         }
+        
+        timer = new Timer(1000, new timerAction());
     }
 
     /**
@@ -157,8 +159,6 @@ public class BoardModel {
         
         //start the game timer
         timePlayed = 0;
-        timer = new Timer(1000, new timerAction());
-        timer.start();
     }
     
     public void endGame() {
@@ -182,25 +182,6 @@ public class BoardModel {
         }
     }
 
-     /**
-     *
-     * @param coords array with x and y coordinates (0 = x coord, 1 = y coord)
-     * @return boolean true when game over, false when OK
-     */
-    public boolean makeMove(int[] coords) {
-        int x = coords[0];
-        int y = coords[1];
-
-        if(board[x][y] == MINEVALUE)  {
-            revealAll();
-            return true;
-        }
-
-        reveal(x, y);
-
-        return false;
-    }
-
     /**
      * reveals the chosen field
      *
@@ -208,6 +189,9 @@ public class BoardModel {
      * @param y
      */
     public void reveal(int x, int y) {
+    	if(!timer.isRunning())
+    		timer.start();
+    	
         revealedCount++;
         revealed[x][y] = true;
 
@@ -277,6 +261,13 @@ public class BoardModel {
     }
     
     
+    /**
+     * TimerAction class to keep track of the time played
+     * the timer starts when player clicks the boardPanel
+     * 
+     * @author vdab416
+     *
+     */
     class timerAction implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {

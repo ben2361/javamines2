@@ -30,11 +30,13 @@ public class HighScores {
         	connection = ConnectionManager.getConnection();
         	
         	// prepare statement
-            stmt = connection.prepareStatement("insert into highscore (name, score, date_added) VALUES(?,?,?);");
+            stmt = connection.prepareStatement(
+            		"insert into highscore (name, score, date_added, game) VALUES(?,?,?);");
 
             stmt.setString(1, name);
             stmt.setInt(2, timePlayed);
             stmt.setDate(3, date);
+            stmt.setString(4, "javamines");
 
             // execute the statement on the server
             stmt.executeUpdate();
@@ -60,7 +62,9 @@ public class HighScores {
             stmt = connection.createStatement();
             
             // execute the statement on the server
-            result = stmt.executeQuery("select name, score, date_added from highscore order by score ASC limit 10;");
+            result = stmt.executeQuery(
+            		"select name, score, date_added from highscore " +
+            		"where game='javamines' order by score ASC limit 10;");
             
             String msg = new String("Highscores:\n\n");
             int i = 1;
