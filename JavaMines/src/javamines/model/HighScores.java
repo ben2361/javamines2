@@ -23,6 +23,7 @@ public class HighScores {
         
         // ask user for a name
         String name = (String) JOptionPane.showInputDialog("Enter your name:");
+        
         java.util.Date u_date = new java.util.Date();
         java.sql.Date date = new java.sql.Date(u_date.getTime());
 
