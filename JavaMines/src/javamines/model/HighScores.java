@@ -74,6 +74,9 @@ public class HighScores {
         		i++;
             }
             
+            if(i == 1)
+            	msg = "No highscores yet.";
+            
             JOptionPane.showMessageDialog(null, msg);
         }
         catch(SQLException se) {
