@@ -69,23 +69,43 @@ public class BoardController {
 
                     int submitScores = JOptionPane.showOptionDialog(
                     		null, 
-                    		"Congratz, You Won! It took "+timePlayed+" seconds to complete the game. \n Do you wish to submit you score?", "You Won!", 
-                    		JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+                    		"Congratz, You Won! It took "+timePlayed+" seconds to complete the game. \n " +
+                    				"Do you wish to submit you score?", 
+                    		"You Won!", 
+                    		JOptionPane.YES_NO_OPTION, 
+                    		JOptionPane.INFORMATION_MESSAGE, 
                     		null, 
                     		options,
                     	    options[0]);
                     
                     if(submitScores == JOptionPane.YES_OPTION) {
-                        try {
-                        	// submit highscore
-                        	HighScores.submitNew(timePlayed);
-                        	// show all highscores
-                        	HighScores.showAll();
-                        }
-                        catch(SQLException se) {
-                        	JOptionPane.showMessageDialog(null, "OOPS there seems to be an error, we can't submit your highscore at the moment.");
-                        	System.err.println(se);
-                        }
+                    	boolean blnRetrySubmit = false;
+                    	
+                    	do {
+                    		
+	                        try {
+	                        	// submit highscore
+	                        	HighScores.submitNew(timePlayed);
+	                        	// show all highscores
+	                        	HighScores.showAll();
+	                        }
+	                        catch(SQLException se) {
+	                        	Object[] options2 = {"Retry", "Cancel"};
+	                        	
+	                        	int retrySubmit = JOptionPane.showOptionDialog(
+	                        			null,
+	                        			"OOPS there seems to be an error, we can't submit your highscore at the moment.",
+	                        			"Database error",
+	                        			JOptionPane.YES_NO_OPTION, 
+	                        			JOptionPane.INFORMATION_MESSAGE,
+	                        			null,
+	                        			options2,
+	                        			options2[0]);
+	                        	
+	                        	if(retrySubmit == JOptionPane.YES_OPTION)
+	                        		blnRetrySubmit = true;
+	                        }
+                    	} while(blnRetrySubmit);
                     }
                 }
             }
