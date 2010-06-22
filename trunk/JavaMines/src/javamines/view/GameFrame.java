@@ -73,7 +73,7 @@ public class GameFrame extends JFrame {
         
         menuBar.add(mnuGame);
 
-        // toolbar met newgame button
+        // toolbar met timelabel
         toolbar = new JToolBar();
         toolbar.setFloatable(false);
         

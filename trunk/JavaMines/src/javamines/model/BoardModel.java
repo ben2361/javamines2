@@ -2,7 +2,6 @@ package javamines.model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.Timer;
 
 
@@ -265,7 +264,7 @@ public class BoardModel {
      * TimerAction class to keep track of the time played
      * the timer starts when player clicks the boardPanel
      * 
-     * @author vdab416
+     * @author Nik Van Looy
      *
      */
     class timerAction implements ActionListener {
