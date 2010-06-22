@@ -82,6 +82,7 @@ public class BoardController {
                     	boolean blnRetrySubmit = false;
                     	
                     	do {
+                    		blnRetrySubmit = false;
                     		
 	                        try {
 	                        	// submit highscore
