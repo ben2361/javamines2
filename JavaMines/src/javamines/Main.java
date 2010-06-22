@@ -30,7 +30,6 @@ public class Main {
 
         gameFrame.repaint();
         gameFrame.validate();
-        //game.play();
     }
 
 }
