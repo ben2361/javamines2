@@ -104,6 +104,8 @@ public class BoardController {
 	                        			options2[0]);
 
 	                        	blnRetrySubmit = retrySubmit == JOptionPane.YES_OPTION ? true : false;
+	                        	
+	                        	System.err.println(se);
 	                        }
                     	} while(blnRetrySubmit);
                     }
