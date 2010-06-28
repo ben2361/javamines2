@@ -2,13 +2,15 @@ package javamines.model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+
 import javax.swing.Timer;
 
 
 /**
  * MineSweeper Business Logic
  */
-public class BoardModel {
+public class BoardModel extends Observable  {
 
     private int maxSize;
     private int mines;
@@ -271,6 +273,9 @@ public class BoardModel {
 
         public void actionPerformed(ActionEvent e) {
             timePlayed++;
+            // notify gameFrame that time has changed
+            setChanged();
+            notifyObservers();
         }
     }
 
