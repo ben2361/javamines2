@@ -2,6 +2,11 @@ package javamines.view;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseListener;
+import java.util.Observable;
+import java.util.Observer;
+
+import javamines.model.BoardModel;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,10 +19,11 @@ import javax.swing.JToolBar;
 
 
 @SuppressWarnings("serial")
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements Observer {
 
     private JPanel contentPanel;
     private BoardPanel boardPanel;
+    private BoardModel boardModel;
     private JToolBar toolbar;
     private JMenuBar menuBar;
     private JLabel timeLabel;
@@ -28,8 +34,9 @@ public class GameFrame extends JFrame {
      * 
      * @param boardPanel BoardPanel
      */
-    public GameFrame(BoardPanel boardPanel) {
+    public GameFrame(BoardPanel boardPanel, BoardModel boardModel) {
         this.boardPanel = boardPanel;
+        this.boardModel = boardModel;
         
         contentPanel = new JPanel();
         contentPanel.setLayout(new BorderLayout());
@@ -83,6 +90,11 @@ public class GameFrame extends JFrame {
 
         contentPanel.add(toolbar, BorderLayout.NORTH);
         contentPanel.add(boardPanel, BorderLayout.CENTER);
+    }
+    
+    public void update(Observable obs, Object obj) {
+    	if(obs == boardModel)
+    		timeLabel.setText(String.valueOf(boardModel.getTimePlayed()));
     }
     
     /**

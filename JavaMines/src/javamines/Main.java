@@ -23,7 +23,8 @@ public class Main {
 
         BoardModel boardModel = new BoardModel(diff);
         BoardPanel boardPanel = new BoardPanel(boardModel);
-        GameFrame gameFrame = new GameFrame(boardPanel);
+        GameFrame gameFrame = new GameFrame(boardPanel, boardModel);
+        boardModel.addObserver(gameFrame);
 
         new BoardController(boardModel, boardPanel);
         new GameController(boardModel, gameFrame, boardPanel);
