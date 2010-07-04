@@ -17,7 +17,6 @@
 	
 	<target name="init" description="Initialize project">
 		<echo message="Initialize" level="info" />
-		<mkdir dir="build" />
 		<mkdir dir="${builddir}" />
 		<mkdir dir="${destdir}" />
 		<mkdir dir="${distdir}" />
