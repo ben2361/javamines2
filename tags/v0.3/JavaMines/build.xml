@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<project name="JavaMines" default="all">
+	
+	<property name="version" value="v0.3" />
+	
+	<property file="folders.properties" />
+	<property environment="env" />
+	<property name="systemauthor" value="${user.name}" />
+	
+	<path id="classpath">
+		<pathelement path="${builddir}" />
+	</path>
+	
+	<tstamp>
+		<format property="DATE" pattern="ddMMyyyy_hh_mm" />
+	</tstamp>
+	
+	<target name="init" description="Initialize project">
+		<echo message="Initialize" level="info" />
+		<mkdir dir="${builddir}" />
+		<mkdir dir="${destdir}" />
+		<mkdir dir="${distdir}" />
+		<mkdir dir="${docsdir}" />
+	</target>
+	
+	<target name="compile" depends="init" description="Compile">
+		<echo message="Compile sources" level="info" />
+		<javac srcdir="src" destdir="${destdir}" classpathref="classpath" />
+	</target>
+	
+	<target name="run" depends="compile" description="Run Program">
+		<echo message="Run program" level="info" />
+		<java classname="javamines.Main" classpathref="classpath" />
+	</target>
+	
+	<target name="jar" depends="compile" description="Create JAR-file">
+		<echo message="Create JAR" level="info" />
+		<jar destfile="build\JavaMines_${version}.jar" basedir="${destdir}" manifest="conf\Manifest.txt">
+		    <fileset dir="res"/>
+		</jar>
+	</target>
+	
+	<target name="doc" depends="init" description="Generate documentation">
+		<echo message="Generate documentation" level="info" />
+		<javadoc destdir="${docsdir}" version="true" author="true" windowtitle="Java Mines" header="auteur: Nik Van Looy">
+			<link href="http://java.sun.com/javase/6/docs/api" />
+			<fileset dir="src" />
+		</javadoc>
+	</target>
+	
+	<target name="release" depends="jar,doc" description="Create release version">
+		<echo message="Release" level="info" />
+		<copy file="conf\JavaMines.bat" todir="${distdir}\bin" />
+		<copy file="build\JavaMines_${version}.jar" todir="${distdir}\lib" />
+		<copy todir="${distdir}\${docsdir}">
+			<fileset dir="${docsdir}" />
+		</copy>
+		<zip destfile="${distdir}\JavaMines_${version}.zip" basedir="${distdir}" excludes="JavaMines_${version}.zip" />
+	</target>
+	
+	<target name="all" depends="run,jar,doc" description="Do them All">
+	</target>
+	
+	<target name="clean" description="Cleanup">
+		<delete includeEmptyDirs="true" quiet="true">
+			<fileset dir="${docsdir}" />
+			<fileset dir="${builddir}" />
+			<fileset dir="${distdir}" />
+		</delete>
+	</target>
+
+</project>
