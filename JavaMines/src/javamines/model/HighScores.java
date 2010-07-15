@@ -32,7 +32,7 @@ public class HighScores {
         	
         	// prepare statement
             stmt = connection.prepareStatement(
-            		"insert into highscore (name, score, date_added, game) VALUES(?,?,?);");
+            		"insert into highscore (name, score, date_added, game) VALUES(?,?,?,?);");
 
             stmt.setString(1, name);
             stmt.setInt(2, timePlayed);
