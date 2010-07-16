@@ -6,11 +6,12 @@ import java.sql.SQLException;
 
 import javamines.model.BoardModel;
 import javamines.model.ButtonState;
-import javamines.model.HighScores;
 import javamines.view.BoardPanel;
 import javamines.view.MineButton;
 
 import javax.swing.JOptionPane;
+
+import nvl.highscores.HighScores;
 
 /**
  * Board Controller
@@ -86,9 +87,9 @@ public class BoardController {
                     		
 	                        try {
 	                        	// submit highscore
-	                        	HighScores.submitNew(timePlayed);
+	                        	HighScores.submitNew(timePlayed, BoardModel.GAMENAME);
 	                        	// show all highscores
-	                        	HighScores.showAll();
+	                        	HighScores.showAll(BoardModel.GAMENAME, false);
 	                        }
 	                        catch(SQLException se) {
 	                        	Object[] options2 = {"Retry", "Cancel"};

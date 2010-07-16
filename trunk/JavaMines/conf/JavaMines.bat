@@ -1,1 +1,1 @@
-java -jar ..\lib\JavaMines.jar
+javaw -jar ..\lib\JavaMines_v0.3.jar

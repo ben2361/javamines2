@@ -1,4 +1,4 @@
-package javamines.model;
+package nvl.highscores;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +17,7 @@ public class HighScores {
 	 * @param timePlayed
 	 * @throws SQLException
 	 */
-    public static void submitNew(int timePlayed) throws SQLException {
+    public static void submitNew(int score, String game) throws SQLException {
         Connection connection = null;
         PreparedStatement stmt = null;
         
@@ -35,9 +35,9 @@ public class HighScores {
             		"insert into highscore (name, score, date_added, game) VALUES(?,?,?,?);");
 
             stmt.setString(1, name);
-            stmt.setInt(2, timePlayed);
+            stmt.setInt(2, score);
             stmt.setDate(3, date);
-            stmt.setString(4, "javamines");
+            stmt.setString(4, game);
 
             // execute the statement on the server
             stmt.executeUpdate();
@@ -51,7 +51,9 @@ public class HighScores {
     }
     
     
-    public static void showAll() throws SQLException {
+    public static void showAll(String game, boolean descending) throws SQLException {
+    	String orderDir = descending ? "DESC" : "ASC";
+    	
     	Connection connection = null;
     	Statement stmt = null;
     	ResultSet result = null;
@@ -65,7 +67,7 @@ public class HighScores {
             // execute the statement on the server
             result = stmt.executeQuery(
             		"select name, score, date_added from highscore " +
-            		"where game='javamines' order by score ASC limit 10;");
+            		"where game='" + game + "' order by score " + orderDir + " limit 10;");
             
             String msg = new String("Highscores:\n\n");
             int i = 1;
