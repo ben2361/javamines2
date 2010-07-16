@@ -11,6 +11,8 @@ import javax.swing.Timer;
  * MineSweeper Business Logic
  */
 public class BoardModel extends Observable  {
+	
+	public final static String GAMENAME = "javamines";
 
     private int maxSize;
     private int mines;
