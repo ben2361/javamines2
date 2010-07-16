@@ -1,1 +1,1 @@
-javaw -jar ..\lib\JavaMines_v0.3.jar
+start "" javaw -jar ..\JavaMines_v0.3.jar
