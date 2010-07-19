@@ -33,10 +33,11 @@ public class MineButton extends JButton {
         flagged = false;
         isMine = false;
         coords = new int[2];
+        
         setButIcon(ButtonState.DEFAULT);
         setFocusPainted(false);
+        
         setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-        //flagButton();
     }
     
     /**

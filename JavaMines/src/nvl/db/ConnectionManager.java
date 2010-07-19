@@ -13,7 +13,7 @@ public class ConnectionManager {
 	
 	/**
 	 * 
-	 * @return
+	 * @return Connection
 	 * @throws SQLException
 	 */
 	public static Connection getConnection() throws SQLException {

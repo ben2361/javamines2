@@ -1,2 +1,2 @@
-Class-Path: lib\mysql-connector-java-5.1.12-bin.jar
+Class-Path: lib\mysql-connector-java-5.1.12-bin.jar 
 Main-Class: javamines.Main

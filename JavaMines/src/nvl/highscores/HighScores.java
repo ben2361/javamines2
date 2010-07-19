@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javamines.model.Difficulty;
+
 import javax.swing.JOptionPane;
 
 import nvl.db.ConnectionManager;
@@ -14,10 +16,12 @@ public class HighScores {
 	
 	/**
 	 * 
-	 * @param timePlayed
+	 * @param score
+	 * @param game
+	 * @param diff
 	 * @throws SQLException
 	 */
-    public static void submitNew(int score, String game) throws SQLException {
+    public static void submitNew(int score, String game, Difficulty diff) throws SQLException {
         Connection connection = null;
         PreparedStatement stmt = null;
         
@@ -32,12 +36,14 @@ public class HighScores {
         	
         	// prepare statement
             stmt = connection.prepareStatement(
-            		"insert into highscore (name, score, date_added, game) VALUES(?,?,?,?);");
+            		"insert into highscore (name, score, date_added, game, difficulty) " +
+            		"VALUES(?,?,?,?,?);");
 
             stmt.setString(1, name);
             stmt.setInt(2, score);
             stmt.setDate(3, date);
             stmt.setString(4, game);
+            stmt.setString(5, diff.toString());
 
             // execute the statement on the server
             stmt.executeUpdate();
@@ -50,8 +56,14 @@ public class HighScores {
         }
     }
     
-    
-    public static void showAll(String game, boolean descending) throws SQLException {
+    /**
+     * 
+     * @param game
+     * @param diff
+     * @param descending
+     * @throws SQLException
+     */
+    public static void showAll(String game, Difficulty diff, boolean descending) throws SQLException {
     	String orderDir = descending ? "DESC" : "ASC";
     	
     	Connection connection = null;
@@ -66,10 +78,10 @@ public class HighScores {
             
             // execute the statement on the server
             result = stmt.executeQuery(
-            		"select name, score, date_added from highscore " +
-            		"where game='" + game + "' order by score " + orderDir + " limit 10;");
+            		"select name, score, date_added from highscore where game='" + game + "' " +
+            		"and difficulty='" + diff.toString() + "' order by score " + orderDir + " limit 10;");
             
-            String msg = new String("Highscores:\n\n");
+            String msg = new String("Highscores - " + diff.toString() + ":\n\n");
             int i = 1;
             
             while(result.next()) {

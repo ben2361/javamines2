@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import javamines.model.BoardModel;
 import javamines.model.ButtonState;
+import javamines.model.Difficulty;
 import javamines.view.BoardPanel;
 import javamines.view.MineButton;
 
@@ -55,7 +56,9 @@ public class BoardController {
                 boardPanel.reDraw();
             	int timePlayed = boardModel.getTimePlayed();
             	
-                JOptionPane.showMessageDialog(null, "Game Over. You played "+timePlayed+" seconds.", "You Lost" , JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, 
+                		"Game Over. You played "+timePlayed+" seconds.", "You Lost" , 
+                		JOptionPane.INFORMATION_MESSAGE);
             }
             else {
                 boardModel.reveal(coords[0], coords[1]);
@@ -87,16 +90,19 @@ public class BoardController {
                     		
 	                        try {
 	                        	// submit highscore
-	                        	HighScores.submitNew(timePlayed, BoardModel.GAMENAME);
+	                        	HighScores.submitNew(timePlayed, BoardModel.GAMENAME, boardModel.getDifficulty());
 	                        	// show all highscores
-	                        	HighScores.showAll(BoardModel.GAMENAME, false);
+	                        	HighScores.showAll(BoardModel.GAMENAME, Difficulty.EASY, false);
+	                        	HighScores.showAll(BoardModel.GAMENAME, Difficulty.MEDIUM, false);
+	                        	HighScores.showAll(BoardModel.GAMENAME, Difficulty.HARD, false);
 	                        }
 	                        catch(SQLException se) {
 	                        	Object[] options2 = {"Retry", "Cancel"};
 	                        	
 	                        	int retrySubmit = JOptionPane.showOptionDialog(
 	                        			null,
-	                        			"OOPS there seems to be an error, we can't submit your highscore at the moment.",
+	                        			"OOPS there seems to be an error, we can't submit your " +
+	                        			"highscore at the moment.",
 	                        			"Database error",
 	                        			JOptionPane.YES_NO_OPTION, 
 	                        			JOptionPane.INFORMATION_MESSAGE,
@@ -132,7 +138,9 @@ public class BoardController {
             MineButton but = (MineButton) e.getSource();
 
             if(e.getButton() == MouseEvent.BUTTON3) {
-                if(but.getCurrentState() == ButtonState.DEFAULT || but.getCurrentState() == ButtonState.FLAGGED  || but.getCurrentState() == ButtonState.HOVER)
+                if(but.getCurrentState() == ButtonState.DEFAULT 
+                		|| but.getCurrentState() == ButtonState.FLAGGED  
+                		|| but.getCurrentState() == ButtonState.HOVER)
                     but.toggleFlagged();
             }
             else if(e.getButton() == MouseEvent.BUTTON1) {

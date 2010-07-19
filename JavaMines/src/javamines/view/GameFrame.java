@@ -1,11 +1,13 @@
 package javamines.view;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javamines.model.BoardModel;
+import javamines.model.Difficulty;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
@@ -21,14 +23,20 @@ import javax.swing.JToolBar;
 @SuppressWarnings("serial")
 public class GameFrame extends JFrame implements Observer {
 
-    private JPanel contentPanel;
     private BoardPanel boardPanel;
     private BoardModel boardModel;
+    
+    private JPanel contentPanel;
     private JToolBar toolbar;
     private JMenuBar menuBar;
     private JLabel timeLabel;
-    private JMenuItem mnuGameNewGame;
     
+    private JMenuItem mnuGameNewGame;
+    private ButtonGroup diffGroup;
+    
+    private JRadioButtonMenuItem mnuGameDiffEasy;
+    private JRadioButtonMenuItem mnuGameDiffMedium;
+    private JRadioButtonMenuItem mnuGameDiffHard;
     
     /**
      * 
@@ -41,14 +49,22 @@ public class GameFrame extends JFrame implements Observer {
         contentPanel = new JPanel();
         contentPanel.setLayout(new BorderLayout());
         
-        setSize(178, 234);
-        //setSize((int) 45 * boardModel.getMaxSize(), (int) 45 * boardModel.getMaxSize());
+        setFrameSize();
+        
         setContentPane(contentPanel);
-        setTitle("Minesweeper v1.0");
+        setTitle("Minesweeper v0.4");
         setVisible(true);
         setResizable(false);
         
         build();
+    }
+    
+    public void setFrameSize() {
+    	setSize((boardModel.getMaxSize() * 17) + 25, (boardModel.getMaxSize() * 17) + 75);
+    }
+    
+    public GameFrame() throws Exception {
+    	throw new Exception("GameFrame needs instances of BoardPanel and BoardModel to function");
     }
 
     public void build() {
@@ -64,20 +80,30 @@ public class GameFrame extends JFrame implements Observer {
         mnuGame.addSeparator();
         
         // diff menu
-        ButtonGroup group = new ButtonGroup();
+        diffGroup = new ButtonGroup();
 
-        JRadioButtonMenuItem mnuGameDiffEasy = new JRadioButtonMenuItem("Easy");
-        JRadioButtonMenuItem mnuGameDiffMedium = new JRadioButtonMenuItem("Medium");
-        JRadioButtonMenuItem mnuGameDiffHard = new JRadioButtonMenuItem("Hard");
+        mnuGameDiffEasy = new JRadioButtonMenuItem("Easy");
+        mnuGameDiffMedium = new JRadioButtonMenuItem("Medium");
+        mnuGameDiffHard = new JRadioButtonMenuItem("Hard");
         
-        group.add(mnuGameDiffEasy);
-        group.add(mnuGameDiffMedium);
-        group.add(mnuGameDiffHard);
+        diffGroup.add(mnuGameDiffEasy);
+        diffGroup.add(mnuGameDiffMedium);
+        diffGroup.add(mnuGameDiffHard);
+        
+        // select the appropriate diff radio
+        Difficulty diff = boardModel.getDifficulty(); 
+        
+        if(diff == Difficulty.EASY)
+        	mnuGameDiffEasy.setSelected(true);
+        else if(diff == Difficulty.MEDIUM)
+        	mnuGameDiffMedium.setSelected(true);
+        else if(diff == Difficulty.HARD)
+        	mnuGameDiffHard.setSelected(true);
         
         mnuGame.add(mnuGameDiffEasy);
         mnuGame.add(mnuGameDiffMedium);
         mnuGame.add(mnuGameDiffHard);
-        
+
         menuBar.add(mnuGame);
 
         // toolbar met timelabel
@@ -92,6 +118,10 @@ public class GameFrame extends JFrame implements Observer {
         contentPanel.add(boardPanel, BorderLayout.CENTER);
     }
     
+    /*
+     * (non-Javadoc)
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
     public void update(Observable obs, Object obj) {
     	if(obs == boardModel)
     		timeLabel.setText(String.valueOf(boardModel.getTimePlayed()));
@@ -104,4 +134,14 @@ public class GameFrame extends JFrame implements Observer {
     public void addClickListener(MouseListener e) {
     	mnuGameNewGame.addMouseListener(e);
     }
+
+    /**
+     * 
+     * @param diffChoiceListener
+     */
+	public void addDifficultyListener(ActionListener diffChoiceListener) {
+		mnuGameDiffEasy.addActionListener(diffChoiceListener);
+		mnuGameDiffMedium.addActionListener(diffChoiceListener);
+		mnuGameDiffHard.addActionListener(diffChoiceListener);
+	}
 }
