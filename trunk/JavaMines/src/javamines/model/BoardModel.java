@@ -27,35 +27,56 @@ public class BoardModel extends Observable  {
     private int revealedCount;
     private Timer timer;
     private int timePlayed;
-
     
+    private Difficulty difficulty;
+
     /**
      * 
      * @param diff
      */
-    public BoardModel(Difficulty diff) {
+    public BoardModel(Difficulty difficulty) {
+    	setDifficulty(difficulty);
 
-        switch(diff) {
-            case MEDIUM:
-                setMaxSize(9);
-                setMines(15);
-                break;
-            case HARD:
-                setMaxSize(9);
-                setMines(10);
-                break;
-            case EASY:
-                setMaxSize(9);
-                setMines(9);
-                break;
-            default:
-                System.out.println("Wrong difficultysetting");
-                break;
-        }
-        
         timer = new Timer(1000, new timerAction());
     }
 
+    /**
+     * generates the necessary number of mines
+     * and initializes the array
+     */
+    public void newGame() {
+        board = new int[maxSize][maxSize];
+        revealed = new boolean[maxSize][maxSize];
+        checked = new boolean[maxSize][maxSize];
+        
+        revealedCount = 0;
+
+        int counter = 1;
+        int x = 0, y = 0;
+
+        while(counter <= mines) {
+            x = (int) (Math.random() * maxSize);
+            y = (int) (Math.random() * maxSize);
+
+            if(board[x][y] != MINEVALUE) {
+                // add mine
+                board[x][y] = MINEVALUE;
+                // add numbers
+                addHintNumbers(x, y);
+                
+                counter++;
+            }
+        }
+        
+        //start the game timer
+        timePlayed = 0;
+    }
+    
+    public void endGame() {
+    	revealAll();
+    	timer.stop();
+    }
+    
     /**
      *
      * @param maxSize maximum dimension of the board
@@ -98,7 +119,7 @@ public class BoardModel extends Observable  {
     /**
      * get the playtime in seconds
      * 
-     * @return
+     * @return int
      */
     public int getTimePlayed() {
     	return timePlayed;
@@ -130,43 +151,6 @@ public class BoardModel extends Observable  {
      */
     public boolean checkWon() {
         return getRevealedCount() + getMines() == getMaxSize() * getMaxSize();
-    }
-
-    /**
-     * generates the necessary number of mines
-     * and initializes the array
-     */
-    public void newGame() {
-        board = new int[maxSize][maxSize];
-        revealed = new boolean[maxSize][maxSize];
-        checked = new boolean[maxSize][maxSize];
-        
-        revealedCount = 0;
-
-        int counter = 1;
-        int x = 0, y = 0;
-
-        while(counter <= mines) {
-            x = (int) (Math.random() * maxSize);
-            y = (int) (Math.random() * maxSize);
-
-            if(board[x][y] != MINEVALUE) {
-                // add mine
-                board[x][y] = MINEVALUE;
-                // add numbers
-                addHintNumbers(x, y);
-                
-                counter++;
-            }
-        }
-        
-        //start the game timer
-        timePlayed = 0;
-    }
-    
-    public void endGame() {
-    	revealAll();
-    	timer.stop();
     }
     
     /**
@@ -223,11 +207,13 @@ public class BoardModel extends Observable  {
                 // out of bounds?
                 if(x < 0 || x > maxSize - 1 || y < 0 || y > maxSize - 1)
                     continue;
+                
                 // field already checked?
                 if(checked[x][y])
                     continue;
 
                 checked[x][y] = true;
+                
                 // call this function (recursively) when value is "empty"
                 if(board[x][y] == EMPTYVALUE) 
                     revealMore(x, y);
@@ -263,18 +249,50 @@ public class BoardModel extends Observable  {
         return false;
     }
     
-    
     /**
+     * 
+     * @param difficulty
+     */
+    public void setDifficulty(Difficulty difficulty) {
+		this.difficulty = difficulty;
+
+        switch(difficulty) {
+            case MEDIUM:
+                setMaxSize(16);
+                setMines(40);
+                break;
+            case HARD:
+                setMaxSize(25);
+                setMines(99);
+                break;
+            case EASY:
+                setMaxSize(9);
+                setMines(10);
+                break;
+            default:
+                System.out.println("Wrong difficultysetting");
+                break;
+        }
+	}
+
+	public Difficulty getDifficulty() {
+		return difficulty;
+	}
+
+
+	/**
      * TimerAction class to keep track of the time played
      * the timer starts when player clicks the boardPanel
      * 
+     * uses the observer pattern to notify gamframe each second
+     * 
      * @author Nik Van Looy
-     *
      */
     class timerAction implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             timePlayed++;
+            
             // notify gameFrame that time has changed
             setChanged();
             notifyObservers();
