@@ -7,6 +7,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JMenuItem;
+
 import javamines.model.BoardModel;
 import javamines.model.Difficulty;
 import javamines.view.BoardPanel;
@@ -49,8 +51,22 @@ public class GameController {
         public void mouseEntered(MouseEvent e) {}
         public void mouseExited(MouseEvent e) {}
         public void mousePressed(MouseEvent e) {
-            boardModel.newGame();
-            boardPanel.build();
+        	if(e.getSource() instanceof JMenuItem) {
+        		JMenuItem source = (JMenuItem) e.getSource();
+        		
+        		if(source == gameFrame.getMnuGameNewGame()) {
+                    gameFrame.resetTimePlayed();
+                    boardModel.newGame();
+                    boardPanel.build();
+        		}
+        		else if(source == gameFrame.getMnuGameViewHighscores()) {
+        			gameFrame.showHighscores();
+        		}
+        		else if(source == gameFrame.getMnuHelpAbout()) {
+        			gameFrame.showAbout();
+        		}
+        	}
+
         }
         public void mouseReleased(MouseEvent e) {}
     }
@@ -71,6 +87,7 @@ public class GameController {
             boardPanel.build();
             
             // update the parent gameFrame with new dimensionx
+            gameFrame.resetTimePlayed();
             gameFrame.setFrameSize();
             gameFrame.repaint();
 		}

@@ -12,7 +12,7 @@ import javax.swing.Timer;
  */
 public class BoardModel extends Observable  {
 	
-	public final static String GAMENAME = "javamines";
+	public final static String GAMENAME = "JavaMines";
 
     private int maxSize;
     private int mines;
@@ -70,6 +70,7 @@ public class BoardModel extends Observable  {
         
         //start the game timer
         timePlayed = 0;
+        timer.stop();
     }
     
     public void endGame() {
