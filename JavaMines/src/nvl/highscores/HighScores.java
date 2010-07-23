@@ -78,10 +78,10 @@ public class HighScores {
             
             // execute the statement on the server
             result = stmt.executeQuery(
-            		"select name, score, date_added from highscore where game='" + game + "' " +
+            		"select name, score, date_added from highscore where game='" + game.toLowerCase() + "' " +
             		"and difficulty='" + diff.toString() + "' order by score " + orderDir + " limit 10;");
             
-            String msg = new String("Highscores - " + diff.toString() + ":\n\n");
+            String msg = new String("Highscores - " + diff.toString().toUpperCase() + ":\n\n");
             int i = 1;
             
             while(result.next()) {
@@ -90,9 +90,11 @@ public class HighScores {
             }
             
             if(i == 1)
-            	msg = "No highscores yet.";
+            	msg += "No highscores yet, be the first!\n\n";
+            else
+                msg += "\n";
             
-            JOptionPane.showMessageDialog(null, msg);
+            JOptionPane.showMessageDialog(null, msg, game + " - Highscores", JOptionPane.PLAIN_MESSAGE);
         }
         catch(SQLException se) {
         	throw new SQLException(se);

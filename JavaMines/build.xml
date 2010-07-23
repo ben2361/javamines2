@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<project name="JavaMines" default="all">
+<project name="JavaMines" xmlns:doxygen="antlib:org.doxygen.tools" default="all">
 
-	<property name="version" value="v0.3" />
+	<property name="version" value="v0.4" />
 	
 	<property name="srcdir" value="src" />
 	<property name="distdir" value="dist" />
@@ -63,7 +63,7 @@
 		<copy todir="${distdir}\${docsdir}">
 			<fileset dir="${docsdir}" />
 		</copy>
-		<zip destfile="${distdir}\JavaMines_${version}.zip" basedir="${distdir}" excludes="JavaMines_${version}.zip" />
+		<zip destfile="${distdir}\JavaMines_${version}.zip" basedir="${distdir}" excludes="*.zip,src/" />
 	</target>
 	
 	<target name="release - with source" depends="jar,doc" description="Create release version">
@@ -77,10 +77,14 @@
 		<copy todir="${distdir}\${srcdir}">
 			<fileset dir="${srcdir}" />
 		</copy>
-		<zip destfile="${distdir}\JavaMines_${version}_source.zip" basedir="${distdir}" excludes="JavaMines_${version}.zip" />
+		<zip destfile="${distdir}\JavaMines_${version}_source.zip" basedir="${distdir}" excludes="*.zip" />
 	</target>
 	
 	<target name="all" depends="run,jar,doc" description="Do them All">
+	</target>
+	
+	<target name="doxygen">
+		<doxygen:doxygen /> 
 	</target>
 	
 	<target name="clean" description="Cleanup">

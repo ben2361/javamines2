@@ -74,7 +74,7 @@ public class BoardController {
                     int submitScores = JOptionPane.showOptionDialog(
                     		null, 
                     		"Congratz, You Won! It took "+timePlayed+" seconds to complete the game. \n " +
-                    				"Do you wish to submit you score?", 
+                				"Do you wish to submit you score?", 
                     		"You Won!", 
                     		JOptionPane.YES_NO_OPTION, 
                     		JOptionPane.INFORMATION_MESSAGE, 
@@ -102,7 +102,7 @@ public class BoardController {
 	                        	int retrySubmit = JOptionPane.showOptionDialog(
 	                        			null,
 	                        			"OOPS there seems to be an error, we can't submit your " +
-	                        			"highscore at the moment.",
+	                        				"highscore at the moment.",
 	                        			"Database error",
 	                        			JOptionPane.YES_NO_OPTION, 
 	                        			JOptionPane.INFORMATION_MESSAGE,
@@ -114,7 +114,8 @@ public class BoardController {
 	                        	
 	                        	System.err.println(se);
 	                        }
-                    	} while(blnRetrySubmit);
+                    	} 
+                    	while(blnRetrySubmit);
                     }
                 }
             }
