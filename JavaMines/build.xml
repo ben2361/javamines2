@@ -1,15 +1,9 @@
 <?xml version="1.0" ?>
-<project name="JavaMines" xmlns:doxygen="antlib:org.doxygen.tools" default="all">
-
-	<property name="version" value="v0.4" />
+<project name="JavaMines" default="all">
 	
-	<property name="srcdir" value="src" />
-	<property name="distdir" value="dist" />
-	<property name="libdir" value="lib" />
-	<property name="builddir" value="build" />
-	<property name="destdir" value="build/classes" />
-	<property name="docsdir" value="docs" />
+	<property name="version" value="v0.2.1" />
 	
+	<property file="folders.properties" />
 	<property environment="env" />
 	<property name="systemauthor" value="${user.name}" />
 	
@@ -23,6 +17,7 @@
 	
 	<target name="init" description="Initialize project">
 		<echo message="Initialize" level="info" />
+		<mkdir dir="build" />
 		<mkdir dir="${builddir}" />
 		<mkdir dir="${destdir}" />
 		<mkdir dir="${distdir}" />
@@ -41,9 +36,11 @@
 	
 	<target name="jar" depends="compile" description="Create JAR-file">
 		<echo message="Create JAR" level="info" />
-		<jar destfile="build\JavaMines.jar" basedir="${destdir}" manifest="conf\Manifest.txt">
+		<jar destfile="build\JavaMines_${version}.jar" basedir="${destdir}" manifest="conf\Manifest.txt">
+		    <fileset dir="${builddir}/classes"/>
+			
 		    <fileset dir="res"/>
-			<fileset dir="lib"/>
+				
 		</jar>
 	</target>
 	
@@ -57,34 +54,15 @@
 	
 	<target name="release" depends="jar,doc" description="Create release version">
 		<echo message="Release" level="info" />
-		<copy file="conf\JavaMines.bat" todir="${distdir}" />
-		<copy file="build\JavaMines.jar" todir="${distdir}" />
-		<copy file="lib\mysql-connector-java-5.1.12-bin.jar" todir="${distdir}\lib" />
+		<copy file="conf\JavaMines.bat" todir="${distdir}\bin" />
+		<copy file="build\JavaMines_${version}.jar" todir="${distdir}\lib" />
 		<copy todir="${distdir}\${docsdir}">
 			<fileset dir="${docsdir}" />
 		</copy>
-		<zip destfile="${distdir}\JavaMines_${version}.zip" basedir="${distdir}" excludes="*.zip,src/" />
-	</target>
-	
-	<target name="release - with source" depends="jar,doc" description="Create release version">
-		<echo message="Release" level="info" />
-		<copy file="conf\JavaMines.bat" todir="${distdir}" />
-		<copy file="build\JavaMines.jar" todir="${distdir}" />
-		<copy file="lib\mysql-connector-java-5.1.12-bin.jar" todir="${distdir}\lib" />
-		<copy todir="${distdir}\${docsdir}">
-			<fileset dir="${docsdir}" />
-		</copy>
-		<copy todir="${distdir}\${srcdir}">
-			<fileset dir="${srcdir}" />
-		</copy>
-		<zip destfile="${distdir}\JavaMines_${version}_source.zip" basedir="${distdir}" excludes="*.zip" />
+		<zip destfile="${distdir}\JavaMines_${version}.zip" basedir="${distdir}" excludes="JavaMines_${version}.zip" />
 	</target>
 	
 	<target name="all" depends="run,jar,doc" description="Do them All">
-	</target>
-	
-	<target name="doxygen">
-		<doxygen:doxygen /> 
 	</target>
 	
 	<target name="clean" description="Cleanup">

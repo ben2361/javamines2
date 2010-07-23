@@ -10,14 +10,15 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
 
-    private BoardModel boardModel;
-
-    private int maxSize;
-    private boolean rebuild = false, initBuild = true;
     private MineButton jButtons[];
-    private GridLayout gridLayout;
-    
-    private MouseListener mouseListener;
+    private BoardModel boardModel;
+    private int maxSize;
+    private boolean initialBuild = true;
+
+
+    public BoardPanel() {
+        // TODO: exception => model not received
+    }
 
     /**
      * 
@@ -25,30 +26,22 @@ public class BoardPanel extends JPanel {
      */
     public BoardPanel(BoardModel boardModel) {
         this.boardModel = boardModel;
+        this.maxSize = boardModel.getMaxSize();
+        jButtons = new MineButton[maxSize * maxSize];
 
-        gridLayout = new GridLayout();
-        setPanelSize(boardModel.getMaxSize());
-        
+        GridLayout gridLayout = new GridLayout();
+        gridLayout.setRows(maxSize);
+        gridLayout.setColumns(maxSize);
         setLayout(gridLayout);
     }
 
-    public BoardPanel() throws Exception {
-        throw new Exception("BoardPanel needs boardModel to function");
-    }
-    
     /**
      * 
-     * @param maxSize
+     * @param e MousListener
      */
-    public void setPanelSize(int maxSize) {
-    	this.maxSize = maxSize;
-    	
-        gridLayout.setRows(maxSize);
-        gridLayout.setColumns(maxSize);
-        
-        removeAll();
-        
-        jButtons = new MineButton[maxSize * maxSize];
+    public void addClickListener(MouseListener e) {
+        for(MineButton but:jButtons)
+            but.addMouseListener(e);
     }
 
     public void build() {
@@ -56,12 +49,11 @@ public class BoardPanel extends JPanel {
 
         for (int y = 0; y  < maxSize; y++) {
             for (int x = 0; x < maxSize; x++) {
-                if(initBuild || rebuild) {
+                if(initialBuild) {
                     jButtons[butCount] = new MineButton();
                     jButtons[butCount].setCoords(x, y);
                     add(jButtons[butCount]);
                 }
-                
                 jButtons[butCount].setIsMine(boardModel.isMine(x, y));
                 jButtons[butCount].setGameValue(boardModel.getCellValue(x, y));
                 jButtons[butCount].reset();
@@ -71,19 +63,31 @@ public class BoardPanel extends JPanel {
         }
 
         setEnabled(true);
-        
-        if(initBuild)
-        	initBuild = false;
 
-        if(rebuild) {
-        	rebuild = false;
-        	addListeners();
-        }
-        else {
-           // repaint();
-        }
+        if(initialBuild)
+            initialBuild = false;
+        else
+            repaint();
     }
-    
+
+    public void resetButtons_BAK() {
+        int butCount = 0;
+
+        for (int y = 0; y  < maxSize; y++) {
+            for (int x = 0; x < maxSize; x++) {
+                jButtons[butCount].setIsMine(boardModel.isMine(x, y));
+                jButtons[butCount].setGameValue(boardModel.getCellValue(x, y));
+                jButtons[butCount].setText("");
+                jButtons[butCount].setEnabled(true);
+                jButtons[butCount].setSelected(false);
+                jButtons[butCount].unflag();
+                butCount++;
+            }
+        }
+
+        repaint();
+    }
+
     public void reDraw() {
         int[] coords;
 
@@ -95,22 +99,4 @@ public class BoardPanel extends JPanel {
         }
     }
 
-	public void setRebuild(boolean rebuild) {
-		this.rebuild = rebuild;
-	}
-
-	/**
-     * 
-     * @param e MousListener
-     */
-    public void addClickListener(MouseListener e) {
-    	mouseListener = e;
-    	
-    	addListeners();
-    }
-
-	private void addListeners() {
-        for(MineButton but:jButtons)
-            but.addMouseListener(mouseListener);
-	}
 }

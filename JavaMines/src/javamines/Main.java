@@ -4,7 +4,7 @@
  * basic mines game made in java with SWING
  * 
  * @author Nik Van Looy
- * @version 0.4
+ * @version 0.2
  */
 
 package javamines;
@@ -23,15 +23,14 @@ public class Main {
 
         BoardModel boardModel = new BoardModel(diff);
         BoardPanel boardPanel = new BoardPanel(boardModel);
-        GameFrame gameFrame = new GameFrame(boardPanel, boardModel);
-        
-        boardModel.addObserver(gameFrame);
+        GameFrame gameFrame = new GameFrame(boardPanel);
 
         new BoardController(boardModel, boardPanel);
         new GameController(boardModel, gameFrame, boardPanel);
 
         gameFrame.repaint();
         gameFrame.validate();
+        //game.play();
     }
 
 }
