@@ -8,15 +8,31 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-
+/**
+ * ConnectionManager can be used to create a connection to a database
+ * the connection is configured in a propertyfile called db.conf
+ * 
+ * this class is a singleton
+ * 
+ * @author Nik Van Looy
+ */
 public class ConnectionManager {
+	
+	private static ConnectionManager _instance = new ConnectionManager();
+	
+	private ConnectionManager() {
+	}
+	
+	public static ConnectionManager getInstance() {
+		return _instance;
+	}
 	
 	/**
 	 * 
 	 * @return Connection
 	 * @throws SQLException
 	 */
-	public static Connection getConnection() throws SQLException {
+	public Connection getConnection() throws SQLException {
 		Connection connection = null;
 		
         try  {
@@ -50,7 +66,7 @@ public class ConnectionManager {
 	 * 
 	 * @param connection
 	 */
-    public static void close(Connection connection) {
+    public void close(Connection connection) {
         if(connection != null)
             try { connection.close(); } catch(SQLException se) {}
     }
