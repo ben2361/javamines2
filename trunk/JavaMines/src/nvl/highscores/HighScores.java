@@ -32,7 +32,7 @@ public class HighScores {
         java.sql.Date date = new java.sql.Date(u_date.getTime());
 
         try {
-        	connection = ConnectionManager.getConnection();
+        	connection = ConnectionManager.getInstance().getConnection();
         	
         	// prepare statement
             stmt = connection.prepareStatement(
@@ -52,7 +52,7 @@ public class HighScores {
         	throw new SQLException(se);
         }
         finally {
-        	ConnectionManager.close(connection);
+        	ConnectionManager.getInstance().close(connection);
         }
     }
     
@@ -71,7 +71,7 @@ public class HighScores {
     	ResultSet result = null;
     	
         try {
-        	connection = ConnectionManager.getConnection();
+        	connection = ConnectionManager.getInstance().getConnection();
         	
         	// prepare statement
             stmt = connection.createStatement();
@@ -100,7 +100,7 @@ public class HighScores {
         	throw new SQLException(se);
         }
         finally {
-        	ConnectionManager.close(connection);
+        	ConnectionManager.getInstance().close(connection);
         }
     }
 }
