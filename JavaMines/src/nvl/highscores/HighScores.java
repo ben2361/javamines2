@@ -12,6 +12,12 @@ import javax.swing.JOptionPane;
 
 import nvl.db.ConnectionManager;
 
+/**
+ * reusable HighScores class 
+ * uses a database to store/retreive game highscores
+ * 
+ * @author Nik Van Looy
+ */
 public class HighScores {
 	
 	/**

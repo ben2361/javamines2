@@ -16,7 +16,10 @@ import javamines.view.GameFrame;
 
 /**
  * Game Controller
- * controller for difficulty settings and new game button
+ * controller for:
+ *   - difficulty settings
+ *   - new game button
+ *   - menubar
  */
 public class GameController {
 
