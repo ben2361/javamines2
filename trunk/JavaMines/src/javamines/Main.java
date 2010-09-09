@@ -27,6 +27,7 @@ public class Main {
         
         boardModel.addObserver(gameFrame);
 
+        // no need to hold references to controllers
         new BoardController(boardModel, boardPanel);
         new GameController(boardModel, gameFrame, boardPanel);
 

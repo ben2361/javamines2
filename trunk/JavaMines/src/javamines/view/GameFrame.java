@@ -23,7 +23,11 @@ import javax.swing.JToolBar;
 
 import nvl.highscores.HighScores;
 
-
+/**
+ * contains the menubar and "new game" button
+ * 
+ * @author Nik Van Looy
+ */
 @SuppressWarnings("serial")
 public class GameFrame extends JFrame implements Observer {
 

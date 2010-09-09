@@ -7,6 +7,11 @@ import javamines.model.BoardModel;
 
 import javax.swing.JPanel;
 
+/**
+ * This panel contains all the togglebuttons, this is the "GameField"
+ * 
+ * @author Nik Van Looy
+ */
 @SuppressWarnings("serial")
 public class BoardPanel extends JPanel {
 

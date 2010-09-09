@@ -10,7 +10,13 @@ import javax.swing.JButton;
 
 import javamines.model.ButtonState;
 
-
+/**
+ * extended the JButton class
+ * 
+ * added game specific logic to the JButton class
+ * 
+ * @author Nik Van Looy
+ */
 @SuppressWarnings("serial")
 public class MineButton extends JButton {
 
